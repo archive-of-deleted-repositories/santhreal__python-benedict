@@ -43,6 +43,8 @@ class CSVSerializer(AbstractSerializer[str, list[dict[str, Any]]]):
         return data
 
     def encode(self, d: list[dict[str, Any]], **kwargs: Any) -> str:
+        if not type_util.is_list_or_tuple(d):
+            raise ValueError("Invalid value: CSV encode expects a list of dicts.")
         ls = d
         # kwargs.setdefault('delimiter', ',')
         if kwargs.pop("quote", False):

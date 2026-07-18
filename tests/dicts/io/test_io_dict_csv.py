@@ -358,6 +358,12 @@ class io_dict_csv_test_case(io_dict_test_case):
                 "invalid_values", columns=["id", "name", "age", "height", "weight"]
             )
 
+    def test_to_csv_with_non_list_values_raises_valueerror(self) -> None:
+        for values in (None, 1, True, {"a": 1}):
+            d = IODict({"values": values})
+            with self.assertRaises(ValueError):
+                d.to_csv()
+
     def test_to_csv_file(self) -> None:
         d = IODict(
             {
